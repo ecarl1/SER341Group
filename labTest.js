@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Lab = require('./lab'); // Assuming you have a correct path to your models
+const Lab = require('./app'); // Assuming you have a correct path to your models
 
 mongoose.connect('your_mongoDB_connection_string', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
