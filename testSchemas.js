@@ -6,9 +6,9 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 // Import your models
-const { Student, Instructor, Lab } = require('../path/to/your/models');
+const { Student, Instructor, Lab } = require('./models/schemas');
 
-// Set up Mongoose connection to a test database
+// REPLACE WITH ACTUAL CONNECTION
 mongoose.connect('mongodb://localhost/testAcademicDB', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 mongoose.connection.once('open', () => console.log('Connected to TestDB')).on('error', (error) => console.error(error));
 

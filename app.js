@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var users = require('./schemas');
+var users = require('./models/schemas');
 /**
  * Create a connection to mongoDB using mongoose
  */
