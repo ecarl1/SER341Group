@@ -12,7 +12,7 @@ var users = require('./models/schemas');
 var mongoose = require('mongoose');
 
 // UPDATE WITH PROPPER MONGO LINK
-var url = 'mongodb+srv://node-user:nodeapp123@cluster0-bwtfl.mongodb.net/recipesDB?retryWrites=true/';
+var url = 'mongodb+srv://ericmarkcarlson:node123@cluster0.j4cyafb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 // Connect using mongoose
 mongoose.connect(url,{ useNewUrlParser: true });
