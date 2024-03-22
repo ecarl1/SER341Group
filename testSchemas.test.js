@@ -29,5 +29,42 @@ describe('MongoDB Schema Tests', () => {
         expect(savedStudent.name).toBe(studentData.name);
     });
 
-    // Further tests can be added as needed here
+    test('Create a new instructor', async () => {
+        const instructorData = { name: 'Instructor Jane' };
+        const instructor = new Instructor(instructorData);
+        const savedInstructor = await instructor.save();
+    
+        // Jest assertions
+        expect(savedInstructor._id).toBeDefined();
+        expect(savedInstructor.name).toBe(instructorData.name);
+    });
+
+    test('Create a new lab', async () => {
+        // Assuming the "Create a new instructor" test has been run or:
+        const instructorData = { name: 'Instructor Jane' };
+        const newInstructor = new Instructor(instructorData);
+        const savedInstructor = await newInstructor.save();
+    
+        const labData = {
+            courseName: "Biology 101",
+            instructor: savedInstructor._id,
+            dateAndTime: new Date(),
+            labType: "Practical",
+            location: "Biology Lab",
+            capacity: 20,
+            studentsEnrolled: [] // Assume empty at the beginning
+        };
+        const lab = new Lab(labData);
+        const savedLab = await lab.save();
+    
+        // Jest assertions
+        expect(savedLab._id).toBeDefined();
+        expect(savedLab.courseName).toBe(labData.courseName);
+        expect(savedLab.instructor.toString()).toBe(savedInstructor._id.toString()); // Ensure the IDs match
+        expect(savedLab.labType).toBe(labData.labType);
+        expect(savedLab.capacity).toBe(labData.capacity);
+        expect(savedLab.studentsEnrolled).toEqual(expect.any(Array));
+        expect(savedLab.studentsEnrolled.length).toBe(0); // Confirm the array starts empty
+    });
+
 });
