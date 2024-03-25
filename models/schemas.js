@@ -38,5 +38,4 @@ var Student = mongoose.model('Student', studentSchema);
 var Instructor = mongoose.model('Instructor', instructorSchema);
 var Lab = mongoose.model('Lab', labSchema);
 
-// Optionally export the models
 module.exports = { Student, Instructor, Lab };

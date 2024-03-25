@@ -11,7 +11,7 @@ var users = require('./models/schemas');
  */
 var mongoose = require('mongoose');
 
-// UPDATE WITH PROPPER MONGO LINK
+// UPDATE WITH PROPPER MONGO LINK LATER ON DURING DEVELOPMENT
 var url = 'mongodb+srv://ericmarkcarlson:node123@cluster0.j4cyafb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 // Connect using mongoose
@@ -29,7 +29,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
+// uncomment after favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());

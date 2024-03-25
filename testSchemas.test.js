@@ -1,8 +1,7 @@
-require('dotenv').config(); // This is still useful for other potential environment variables you might use
+require('dotenv').config(); 
 const mongoose = require('mongoose');
 const { Student, Instructor, Lab } = require('./models/schemas'); // Adjust path to your schemas file
 
-// Using the provided MongoDB URI directly instead of an environment variable
 const url = 'mongodb+srv://ericmarkcarlson:node123@cluster0.j4cyafb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 describe('MongoDB Schema Tests', () => {
@@ -40,7 +39,6 @@ describe('MongoDB Schema Tests', () => {
     });
 
     test('Create a new lab', async () => {
-        // Assuming the "Create a new instructor" test has been run or:
         const instructorData = { name: 'Instructor Jane' };
         const newInstructor = new Instructor(instructorData);
         const savedInstructor = await newInstructor.save();
@@ -52,7 +50,7 @@ describe('MongoDB Schema Tests', () => {
             labType: "Practical",
             location: "Biology Lab",
             capacity: 20,
-            studentsEnrolled: [] // Assume empty at the beginning
+            studentsEnrolled: [] 
         };
         const lab = new Lab(labData);
         const savedLab = await lab.save();
@@ -60,11 +58,11 @@ describe('MongoDB Schema Tests', () => {
         // Jest assertions
         expect(savedLab._id).toBeDefined();
         expect(savedLab.courseName).toBe(labData.courseName);
-        expect(savedLab.instructor.toString()).toBe(savedInstructor._id.toString()); // Ensure the IDs match
+        expect(savedLab.instructor.toString()).toBe(savedInstructor._id.toString()); 
         expect(savedLab.labType).toBe(labData.labType);
         expect(savedLab.capacity).toBe(labData.capacity);
         expect(savedLab.studentsEnrolled).toEqual(expect.any(Array));
-        expect(savedLab.studentsEnrolled.length).toBe(0); // Confirm the array starts empty
+        expect(savedLab.studentsEnrolled.length).toBe(0); 
     });
 
 });
