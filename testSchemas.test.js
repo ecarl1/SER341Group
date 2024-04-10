@@ -1,6 +1,8 @@
 require('dotenv').config(); 
 const mongoose = require('mongoose');
-const { Student, Instructor, Lab } = require('./models/schemas'); // Adjust path to your schemas file
+const Student = require('./models/student'); // Adjust path to your schemas file
+const Instructor = require('./models/instructor');
+const Lab = require('./models/lab');
 
 const url = 'mongodb+srv://ericmarkcarlson:node123@cluster0.j4cyafb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 beforeAll(async () => {
