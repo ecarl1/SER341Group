@@ -8,24 +8,42 @@ const mongoose = require('mongoose');
 
 const testDatabaseUrl = 'mongodb+srv://ericmarkcarlson:node123@cluster0.j4cyafb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-// Set up database connection for testing
+
+
 beforeAll(async () => {
-  await mongoose.connect(testDatabaseUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
+  await mongoose.connect(testDatabaseUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+});
+
+afterEach(async () => {
+  // Clean up the test database
+  await Student.deleteMany({});
 });
 
 afterAll(async () => {
-  await mongoose.connection.dropDatabase();  // Optionally drop the test database
-  await mongoose.disconnect();
+  // Close the Mongoose connection
+  await mongoose.connection.close();
 });
 
+describe('POST /students', () => {
+  test('It should create a new student and return it', async () => {
+      const newStudent = {
+          studentID: 'test-001',
+          name: 'John Doe'
+      };
 
+      const response = await request(app)
+          .post('/students')
+          .send(newStudent)
+          .expect(201)
+          .expect('Content-Type', /json/);
 
+      // Check the response data
+      expect(response.body.studentID).toBe(newStudent.studentID);
+      expect(response.body.name).toBe(newStudent.name);
 
-
-// Tests for POST /students route
-
-
-// You can add more tests for other routes following the pattern above.
+      // Check the database
+      const student = await Student.findOne({ studentID: newStudent.studentID });
+      expect(student).toBeTruthy();
+      expect(student.name).toBe(newStudent.name);
+  });
+});
