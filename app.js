@@ -11,7 +11,10 @@ var users = require('./models/schemas');
  * Create a connection to mongoDB using mongoose
  */
 var mongoose = require('mongoose');
-var { Student, Instructor, Lab } = require('./models/schemas');
+const Student = require('./models/student'); // Adjust path to your schemas file
+const Instructor = require('./models/instructor');
+const Lab = require('./models/lab');
+
 
 // UPDATE WITH PROPPER MONGO LINK LATER ON DURING DEVELOPMENT
 var url = 'mongodb+srv://ericmarkcarlson:node123@cluster0.j4cyafb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';

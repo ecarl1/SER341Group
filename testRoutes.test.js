@@ -1,6 +1,7 @@
 const request = require('supertest');
-const { app } = require('./app'); // Adjust the path to reference app.js correctly
-const { Student } = require('./models/schemas'); // Adjust the path to reference schemas.js correctly
+const Student = require('./models/student'); // Adjust path to your schemas file
+const Instructor = require('./models/instructor');
+const Lab = require('./models/lab'); // Adjust the path to reference schemas.js correctly
 const mongoose = require('mongoose');
 
 // ... rest of your test code ...
@@ -24,6 +25,7 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
+//NOTE TO GROUP TESTING ROUTES WITH UNIT TESTS IS NOT EASY USING POSTMAN TO TEST MANY BE EASIER
 describe('POST /students', () => {
   test('It should create a new student and return it', async () => {
       const newStudent = {
