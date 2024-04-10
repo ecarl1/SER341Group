@@ -185,7 +185,6 @@ router.get('/professor/:professorId', async (req, res) => {
 // Finally, use the router in your Express application
 app.use('/', router);
 
-// ... rest of your existing app.js code ...
 
 
 module.exports = app;
