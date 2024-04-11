@@ -1,6 +1,17 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+
+//NOTE TO GROUP
+//NOTE TO GROUP
+//NOTE TO GROUP
+//NOTE TO GROUP
+
+//NOTE TO GROUP
+//NOTE TO GROUP
+//THIS FILE IS OLD AND IS AN OUTDATED VERSION OF THE SCHEMA FILE
+
+
 // Assuming that studentID and instructorID are unique identifiers like email or university ID
 
 // Student Schema
