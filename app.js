@@ -6,15 +6,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var router = express.Router();
 
-var users = require('./models/schemas');
+// Removed the line importing schemas.js
 /**
  * Create a connection to mongoDB using mongoose
  */
 var mongoose = require('mongoose');
-const Student = require('./models/student'); // Adjust path to your schemas file
+const Student = require('./models/student'); // Correctly adjusted path to your schema file
 const Instructor = require('./models/instructor');
 const Lab = require('./models/lab');
-
 
 // UPDATE WITH PROPPER MONGO LINK LATER ON DURING DEVELOPMENT
 var url = 'mongodb+srv://ericmarkcarlson:node123@cluster0.j4cyafb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
@@ -41,6 +40,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// ... Rest of the app.js file ...
+
 
 
 
@@ -143,12 +145,7 @@ router.get('/professor/:professorId/labs', async (req, res) => {
 
 // ... Rest of the file ...
 
-// Use the router in your Express application
-app.use('/', router);
 
-// ... Error handlers and other middleware ...
-
-module.exports = app;
 
 
 // Finally, use the router in your Express application
