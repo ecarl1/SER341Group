@@ -1,21 +1,21 @@
 var express = require('express');
-var router = express.Router();
+var labRouter = express.Router();
 var Lab = require('../models/lab.js');
-var Student = require('../models/student.js');
 var Instructor = require('../models/instructor.js');
 
 //GET labs
-router.get('/', function(req, res, next) {
+labRouter.route('/')
+.get(function(req, res, next) {
     Lab.find({}, function(err, labs) {
         if (err) {
             return next(err);
         }
         res.json(labs);
     });
-});
+})
 
 //POST lab
-router.post('/', function(req, res, next) {
+.post(function(req, res, next) {
     Lab.create(req.body, function(err, lab) {
         if (err) {
             return next(err);
@@ -26,7 +26,8 @@ router.post('/', function(req, res, next) {
 
 
 //GET lab by id
-router.get('/:labId', function(req, res, next) {
+labRouter.route('/:labId')
+.get(function(req, res, next) {
     Lab.findById(req.params.labId, function(err, lab) {
         if (err) {
             return next(err);
@@ -36,10 +37,10 @@ router.get('/:labId', function(req, res, next) {
         }
         res.json(lab);
     });
-});
+})
 
 //PUT lab by id
-router.put('/:labId', function(req, res, next) {
+.put(function(req, res, next) {
     Lab.findByIdAndUpdate(req.params.labId, req.body, { new: true }, function(err, lab) {
         if (err) {
             return next(err);
@@ -52,7 +53,8 @@ router.put('/:labId', function(req, res, next) {
 });
 
 //GET student in lab by lab id
-router.get('/:labId/students', function(req, res, next) {
+labRouter.route('/:labId/students')
+.get(function(req, res, next) {
     Lab.findById(req.params.labId)
         .populate('studentsEnrolled.student')
         .exec(function(err, lab) {
@@ -67,7 +69,8 @@ router.get('/:labId/students', function(req, res, next) {
 });
 
 //GET student information by student id from lab by lab idi
-router.get('/:labId/students/:studentId', function(req, res, next) {
+labRouter.route('/:labId/students/:studentId')
+.get(function(req, res, next) {
     Lab.findById(req.params.labId)
         .populate({
             path: 'studentsEnrolled.student',
@@ -91,7 +94,8 @@ router.get('/:labId/students/:studentId', function(req, res, next) {
 });
 
 //GET absences from lab by lab id
-router.get('/:labId/absences', function(req, res, next) {
+labRouter.route('/:labId/absences')
+.get(function(req, res, next) {
     Lab.findById(req.params.labId)
         .populate('absences.student')
         .exec(function(err, lab) {
@@ -103,10 +107,10 @@ router.get('/:labId/absences', function(req, res, next) {
             }
             res.json(lab.absences);
         });
-});
+})
 
 //PUT absences of lab by lab id
-router.put('/:labId/absences', function(req, res, next) {
+.put(function(req, res, next) {
     Lab.findById(req.params.labId, function(err, lab) {
         if (err) {
             return next(err);
@@ -129,7 +133,8 @@ router.put('/:labId/absences', function(req, res, next) {
 });
 
 //GET absences of a student by student id in a lab by lab id
-router.get('/:labId/absences/:studentId', function(req, res, next) {
+labRouter.route('/:labId/absences/:studentId')
+.get(function(req, res, next) {
     Lab.findById(req.params.labId)
         .populate({
             path: 'absences',
@@ -150,7 +155,8 @@ router.get('/:labId/absences/:studentId', function(req, res, next) {
 });
 
 //GET labs taught by instructor by instructor id
-router.get('/:instructorId', function(req, res, next) {
+labRouter.route('/:instructorId')
+.get(function(req, res, next) {
     Instructor.findById(req.params.instructorId)
         .populate('labs')
         .exec(function(err, instructor) {
@@ -164,4 +170,4 @@ router.get('/:instructorId', function(req, res, next) {
         });
 });
 
-module.exports = router;
+module.exports = labRouter;
