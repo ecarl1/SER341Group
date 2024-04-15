@@ -5,169 +5,122 @@ var Instructor = require('../models/instructor.js');
 
 //GET labs
 labRouter.route('/')
-.get(function(req, res, next) {
-    Lab.find({}, function(err, labs) {
-        if (err) {
-            return next(err);
-        }
-        res.json(labs);
-    });
+.get(async (req, res, next) => {
+    try {
+      const data = await Lab.find({});
+      res.json(data);
+    } catch (e) {
+      console.log("Error failed to query", e);
+    }
 })
 
 //POST lab
-.post(function(req, res, next) {
-    Lab.create(req.body, function(err, lab) {
-        if (err) {
-            return next(err);
-        }
-        res.json(lab);
-    });
+.post(async (req, res) => {
+    try {
+      const lab = await Lab.create(req.body);
+      var id = lab._id;
+      res.send("Added lab with id:" + id);
+      console.log("Data saved");
+    } catch (e) {
+      console.log("Failed to save data");
+    }
 });
 
 
 //GET lab by id
 labRouter.route('/:labId')
-.get(function(req, res, next) {
-    Lab.findById(req.params.labId, function(err, lab) {
-        if (err) {
-            return next(err);
-        }
-        if (!lab) {
-            return res.status(404).json({ message: 'Lab not found' });
-        }
-        res.json(lab);
-    });
+.get(async (req, res, next) => {
+    try {
+      const lab = await Lab.findById(req.params.labId);
+      res.json(lab);
+    } catch (e) {
+      console.log("Error retriving lab", e);
+    }
 })
 
 //PUT lab by id
-.put(function(req, res, next) {
-    Lab.findByIdAndUpdate(req.params.labId, req.body, { new: true }, function(err, lab) {
-        if (err) {
-            return next(err);
-        }
-        if (!lab) {
-            return res.status(404).json({ message: 'Lab not found' });
-        }
-        res.json(lab);
-    });
+.put(async (req, res, next) => {
+    try {
+      const lab = await Lab.findByIdAndUpdate(
+        req.params.labId,
+        req.body
+      );
+      res.json(lab);
+      console.log("Lab updated");
+    } catch (e) {
+      console.log("Error updating lab", e);
+    }
 });
 
 //GET student in lab by lab id
 labRouter.route('/:labId/students')
-.get(function(req, res, next) {
-    Lab.findById(req.params.labId)
-        .populate('studentsEnrolled.student')
-        .exec(function(err, lab) {
-            if (err) {
-                return next(err);
-            }
-            if (!lab) {
-                return res.status(404).json({ message: 'Lab not found' });
-            }
-            res.json(lab.studentsEnrolled);
-        });
+.get(async (req, res, next) => {
+    try {
+      const lab = await Lab.findById(req.params.labId);
+      res.json(lab.studentsEnrolled);
+    } catch (e) {
+      console.log("Error finding students", e);
+    }
 });
 
 //GET student information by student id from lab by lab idi
 labRouter.route('/:labId/students/:studentId')
-.get(function(req, res, next) {
-    Lab.findById(req.params.labId)
-        .populate({
-            path: 'studentsEnrolled.student',
-            match: { _id: req.params.studentId }
-        })
-        .exec(function(err, lab) {
-            if (err) {
-                return next(err);
-            }
-            if (!lab) {
-                return res.status(404).json({ message: 'Lab not found' });
-            }
-            const studentEnrollment = lab.studentsEnrolled.find(enrollment =>
-                enrollment.student && enrollment.student._id.equals(req.params.studentId)
-            );
-            if (!studentEnrollment) {
-                return res.status(404).json({ message: 'Student not found in lab' });
-            }
-            res.json(studentEnrollment);
-        });
+.get(async (req, res, next) => {
+    try {
+      const lab = await Lab.findById(req.params.labId);
+      res.json(recipe.studentsEnrolled.id(req.params.studentId));
+    } catch (e) {
+      console.log("Error finding student", e);
+    }
 });
 
 //GET absences from lab by lab id
 labRouter.route('/:labId/absences')
-.get(function(req, res, next) {
-    Lab.findById(req.params.labId)
-        .populate('absences.student')
-        .exec(function(err, lab) {
-            if (err) {
-                return next(err);
-            }
-            if (!lab) {
-                return res.status(404).json({ message: 'Lab not found' });
-            }
-            res.json(lab.absences);
-        });
+.get(async (req, res, next) => {
+    try {
+      const lab = await Lab.findById(req.params.labId);
+      res.json(lab.absences);
+    } catch (e) {
+      console.log("Error finding students", e);
+    }
 })
 
 //PUT absences of lab by lab id
-.put(function(req, res, next) {
-    Lab.findById(req.params.labId, function(err, lab) {
-        if (err) {
-            return next(err);
-        }
-        if (!lab) {
-            return res.status(404).json({ message: 'Lab not found' });
-        }
-
-        // Update absences
+.put(async (req, res, next) => {
+      try {
+        const lab = await Lab.findById(req.params.labId);
         lab.absences = req.body.absences || [];
-
-        // Save changes
-        lab.save(function(err, updatedLab) {
-            if (err) {
-                return next(err);
-            }
-            res.json(updatedLab.absences);
-        });
-    });
+        lab.save();
+        res.json(lab.absences);
+    } catch (e) {
+      console.log("Error updating absences", e);
+    }
 });
 
 //GET absences of a student by student id in a lab by lab id
 labRouter.route('/:labId/absences/:studentId')
-.get(function(req, res, next) {
-    Lab.findById(req.params.labId)
-        .populate({
-            path: 'absences',
-            match: { student: req.params.studentId }
-        })
-        .exec(function(err, lab) {
-            if (err) {
-                return next(err);
-            }
-            if (!lab) {
-                return res.status(404).json({ message: 'Lab not found' });
-            }
-            const studentAbsences = lab.absences.filter(absence =>
-                absence.student && absence.student._id.equals(req.params.studentId)
-            );
-            res.json(studentAbsences);
-        });
+.get(async (req, res, next) => {
+    try {
+      const lab = await Lab.findById(req.params.labId)
+      lab.populate({path: 'absences', match: { student: req.params.studentId } })
+      const studentAbsences = lab.absences.filter(absence => absence.student && 
+      absence.student._id.equals(req.params.studentId));
+      res.json(studentAbsences);
+    } catch (e) {
+        console.log("Error getting absences", e);
+      }
 });
 
 //GET labs taught by instructor by instructor id
 labRouter.route('/:instructorId')
-.get(function(req, res, next) {
-    Instructor.findById(req.params.instructorId)
-        .populate('labs')
-        .exec(function(err, instructor) {
-            if (err) {
-                return next(err);
-            }
-            if (!instructor) {
-                return res.status(404).json({ message: 'Instructor not found' });
-            }
-            res.json(instructor.labs);
-        });
+.get(async (req, res, next) => {
+    try {
+        const instructor = Instructor.findById(req.params.instructorId)
+        instructor.populate('labs')
+        res.json(instructor.labs);
+    } catch (e) {
+        console.log("Error getting instructor", e);
+      }
 });
 
 module.exports = labRouter;
