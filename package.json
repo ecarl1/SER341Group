@@ -6,7 +6,11 @@
     "mongodb": "^6.5.0",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
+    "pug": "^3.0.2",
     "serve-favicon": "^2.5.0"
+  },
+  "scripts": {
+    "test": "mocha --experimental-modules testRoutes.test.mjs"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

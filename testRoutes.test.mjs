@@ -1,53 +1,63 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import sinon from 'sinon';
-import server from './app.mjs'; // Update this path to match the location of app.js, change app.js to app.mjs if necessary
-import Lab from './models/lab.mjs'; // Update this path, change lab.js to lab.mjs if necessary
+import request from 'supertest';
+import { expect } from 'chai';
+import mongoose from 'mongoose';
+import app from './app.js';  // Adjust the path as necessary
 
 
-//TESTING ROUTES DOES NOTE WORK WELL ON VS CODE USE POSTMAN TO TEST
-//TESTING ROUTES DOES NOTE WORK WELL ON VS CODE USE POSTMAN TO TEST
-
-//TESTING ROUTES DOES NOTE WORK WELL ON VS CODE USE POSTMAN TO TEST
+//use npm test to test
 
 
-const { expect } = chai;
-chai.use(chaiHttp);
-
-describe('Lab Router', () => {
-    afterEach(() => {
-        sinon.restore();
+describe('Lab Routes', function() {
+    before(function(done) {
+        mongoose.connect('mongodb+srv://ericmarkcarlson:node123@cluster0.j4cyafb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => done());
     });
 
-    describe('GET /labs', () => {
-        it('should return all labs', (done) => {
-            const mockLabs = [{ /* mock lab data */ }, { /* another mock lab */ }];
+    after(function(done) {
+        mongoose.connection.close().then(() => done());
+    });
 
-            sinon.stub(Lab, 'find').yields(null, mockLabs);
-
-            chai.request(server)
-                .get('/labs')
-                .end((err, res) => {
-                    expect(res).to.have.status(200);
+    describe('GET /', function() {
+        it('should get all labs', function(done) {
+            request(app)
+                .get('/')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
                     expect(res.body).to.be.an('array');
-                    expect(res.body).to.deep.equal(mockLabs);
-                    done();
-                });
-        });
-
-        it('should handle errors', (done) => {
-            const error = new Error('Error fetching labs');
-
-            sinon.stub(Lab, 'find').yields(error, null);
-
-            chai.request(server)
-                .get('/labs')
-                .end((err, res) => {
-                    expect(res).to.have.status(500);
                     done();
                 });
         });
     });
 
-    // Additional tests...
+    describe('POST /', function() {
+        it('should create a new lab', function(done) {
+            request(app)
+                .post('/')
+                .send({ name: 'New Lab', instructor: '12345', courseName: 'Biology 101', dateAndTime: new Date(), labType: 'Practical', location: 'Lab Room 3', capacity: 30 })
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    expect(res.body).to.have.property('_id');
+                    done();
+                });
+        });
+    });
+
+    describe('GET /:labId', function() {
+        it('should get a lab by id', function(done) {
+            const Lab = mongoose.model('Lab');
+            const lab = new Lab({ name: 'Sample Lab', instructor: '12345' });
+            lab.save().then(savedLab => {
+                request(app)
+                    .get(`/${savedLab._id}`)
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(done);
+            });
+        });
+    });
+
+    // More tests for other routes...
 });
