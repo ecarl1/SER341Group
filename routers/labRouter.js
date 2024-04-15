@@ -1,30 +1,31 @@
 var express = require('express');
 var labRouter = express.Router();
-var Lab = require('../models/lab.js');
-var Instructor = require('../models/instructor.js');
+var Lab = require('../models/lab');  // Ensure correct paths
+var Instructor = require('../models/instructor');  // Ensure correct paths
 
-//GET labs
-labRouter.route('/')
-.get(async (req, res, next) => {
+//GET all labs
+labRouter.get('/', async (req, res) => {
     try {
-      const data = await Lab.find({});
-      res.json(data);
+        const labs = await Lab.find({});
+        res.json(labs);
     } catch (e) {
-      console.log("Error failed to query", e);
-    }
-})
-
-//POST lab
-.post(async (req, res) => {
-    try {
-      const lab = await Lab.create(req.body);
-      var id = lab._id;
-      res.send("Added lab with id:" + id);
-      console.log("Data saved");
-    } catch (e) {
-      console.log("Failed to save data");
+        console.error("Failed to retrieve labs", e);
+        res.status(500).json({ message: "Failed to retrieve labs" });
     }
 });
+
+//POST create a lab
+labRouter.post('/', async (req, res) => {
+    try {
+        const lab = await Lab.create(req.body);
+        console.log("Lab created with ID:", lab._id);
+        res.status(201).json(lab);
+    } catch (e) {
+        console.error("Failed to create lab", e);
+        res.status(500).json({ message: "Failed to create lab" });
+    }
+});
+
 
 
 //GET lab by id

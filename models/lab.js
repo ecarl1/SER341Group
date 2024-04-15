@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 // Lab Schema
 var labSchema = new Schema({
+    labID: { type: String, required: true, unique: true },
     courseName: { type: String, required: true },
     instructor: { type: Schema.Types.ObjectId, ref: 'Instructor', required: true },
     dateAndTime: { type: Date, required: true },
@@ -21,7 +22,6 @@ var labSchema = new Schema({
     timestamps: true
 });
 
-// Adding method to Lab for enrollment
 labSchema.methods.enrollStudent = function(studentId) {
     this.studentsEnrolled.push({ student: studentId });
 };

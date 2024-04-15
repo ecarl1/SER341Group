@@ -15,26 +15,30 @@ studentRouter.route('/')
 
 //POST student
 .post(async (req, res) => {
-    try {
-      const student = await Student.create(req.body);
-      var id = student._id;
-      res.send("Added student with id:" + id);
-      console.log("Data saved");
-    } catch (e) {
-      console.log("Failed to save data");
-    }
+  try {
+    const student = await Student.create(req.body);
+    console.log("Data saved", student);
+    res.status(201).json({ message: "Added student with id:", id: student._id });
+  } catch (e) {
+    console.error("Failed to save data", e);
+    res.status(500).json({ message: "Failed to save data", error: e.message });
+  }
 });
 
 
-//GET student by student id
-studentRouter
-.route('/:studentId')
-.get(async (req, res, next) => {
+
+//GET student by studentID
+studentRouter.route('/:studentID')
+.get(async (req, res) => {
     try {
-      const student = await Student.findById(req.params.studentId);
-      res.json(student);
+        const student = await Student.findOne({ studentID: req.params.studentID });
+        if (!student) {
+            return res.status(404).json({ message: 'Student not found' });
+        }
+        res.json(student);
     } catch (e) {
-      console.log("Error retriving student", e);
+        console.error("Error retrieving student", e);
+        res.status(500).json({ error: 'Server error', message: e.message });
     }
 });
 
