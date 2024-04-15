@@ -1,6 +1,6 @@
 require('dotenv').config(); 
 const mongoose = require('mongoose');
-const Student = require('./models/student'); // Adjust path to your schemas file
+const Student = require('./models/student'); 
 const Instructor = require('./models/instructor');
 const Lab = require('./models/lab');
 
@@ -10,7 +10,6 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    // Clean up test data
     await Student.deleteMany({});
     await Instructor.deleteMany({});
     await Lab.deleteMany({});
@@ -21,7 +20,7 @@ describe('MongoDB Schema Tests', () => {
     test('Create a new student', async () => {
         const uniqueSuffix = Date.now().toString();
         const studentData = {
-            studentID: `student-test-${uniqueSuffix}`, // Unique identifier for each test
+            studentID: `student-test-${uniqueSuffix}`, 
             name: 'Test Student'
         };
         const student = new Student(studentData);
@@ -31,13 +30,12 @@ describe('MongoDB Schema Tests', () => {
         expect(savedStudent.studentID).toBe(studentData.studentID);
         expect(savedStudent.name).toBe(studentData.name);
     
-        // Clean up after test
         await Student.deleteOne({ studentID: studentData.studentID });
     });
 
     test('Create a new instructor', async () => {
         const instructorData = {
-            instructorID: 'instructor-test-001', // Unique identifier
+            instructorID: 'instructor-test-001', 
             name: 'Instructor Jane'
         };
         const instructor = new Instructor(instructorData);
@@ -49,9 +47,8 @@ describe('MongoDB Schema Tests', () => {
     });
 
     test('Create a new lab', async () => {
-        // Ensure an instructor exists to reference in the lab
         const instructorData = {
-            instructorID: 'instructor-test-002', // Unique identifier
+            instructorID: 'instructor-test-002', 
             name: 'Instructor John'
         };
         const instructor = new Instructor(instructorData);
