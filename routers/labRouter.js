@@ -1,7 +1,7 @@
 var express = require('express');
 var labRouter = express.Router();
-var Lab = require('../models/lab');  // Ensure correct paths
-var Instructor = require('../models/instructor');  // Ensure correct paths
+var Lab = require('../models/lab');
+var Instructor = require('../models/instructor');
 
 //GET all labs
 labRouter.get('/', async (req, res) => {
@@ -69,7 +69,7 @@ labRouter.route('/:labId/students/:studentId')
 .get(async (req, res, next) => {
     try {
       const lab = await Lab.findById(req.params.labId);
-      res.json(recipe.studentsEnrolled.id(req.params.studentId));
+      res.json(lab.studentsEnrolled.id(req.params.studentId));
     } catch (e) {
       console.log("Error finding student", e);
     }
