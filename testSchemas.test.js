@@ -4,9 +4,22 @@ const Student = require('./models/student');
 const Instructor = require('./models/instructor');
 const Lab = require('./models/lab');
 
-const connectDB = async (url) => mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-const clearCollection = async (model) => await model.deleteMany({});
+const connectDB = async (connectionUrl) => {
+    try {
+        await mongoose.connect(connectionUrl, {
+            useNewUrlParser: true, 
+            useUnifiedTopology: true
+        });
+        console.log('Database connected successfully');
+    } catch (error) {
+        console.error('Database connection failed:', error);
+    }
+};
 
+const clearCollection = async (model) => {
+    await model.deleteMany({});
+    console.log('All data has been removed from the collection.');
+};
 const url = 'mongodb+srv://ericmarkcarlson:node123@cluster0.j4cyafb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 beforeAll(() => connectDB(url));
 
