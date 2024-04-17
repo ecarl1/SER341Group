@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
   res.status(404).json({ message: "Not Found" });
 });
 
-// Error handler
+// Error handler for functions with 500 error
 app.use(function(err, req, res, next) {
   res.status(err.status || 500).json({
     message: err.message,

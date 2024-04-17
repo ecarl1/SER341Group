@@ -12,11 +12,10 @@ var Schema = mongoose.Schema;
 //THIS FILE IS OLD AND IS AN OUTDATED VERSION OF THE SCHEMA FILE
 
 
-// Assuming that studentID and instructorID are unique identifiers like email or university ID
 
 // Student Schema
 var studentSchema = new Schema({
-    studentID: { type: String, required: true, unique: true }, // unique identifier for a student
+    studentID: { type: String, required: true, unique: true }, 
     name: { type: String, required: true },
     enrolledLabs: [{
         lab: { type: Schema.Types.ObjectId, ref: 'Lab' },
@@ -28,7 +27,7 @@ var studentSchema = new Schema({
 
 // Instructor Schema
 var instructorSchema = new Schema({
-    instructorID: { type: String, required: true, unique: true }, // unique identifier for an instructor
+    instructorID: { type: String, required: true, unique: true }, 
     name: { type: String, required: true },
     labs: [{ type: Schema.Types.ObjectId, ref: 'Lab' }]
 }, {
@@ -40,12 +39,12 @@ var labSchema = new Schema({
     courseName: { type: String, required: true },
     instructor: { type: Schema.Types.ObjectId, ref: 'Instructor', required: true },
     dateAndTime: { type: Date, required: true },
-    labType: { type: String, required: true }, // e.g., "Workshop", "Seminar"
+    labType: { type: String, required: true }, 
     location: { type: String, required: true },
     capacity: { type: Number, required: true },
     studentsEnrolled: [{
         student: { type: Schema.Types.ObjectId, ref: 'Student' },
-        enrolledDate: { type: Date, default: Date.now } // when the student was enrolled in the lab
+        enrolledDate: { type: Date, default: Date.now } 
     }],
     absences: [{ 
         student: { type: Schema.Types.ObjectId, ref: 'Student' },
@@ -67,7 +66,6 @@ studentSchema.methods.recordAbsence = function(labId, absenceDate) {
 
 // Adding method to Lab for enrollment
 labSchema.methods.enrollStudent = function(studentId) {
-    // Additional checks can be added here for capacity, etc.
     this.studentsEnrolled.push({ student: studentId });
 };
 

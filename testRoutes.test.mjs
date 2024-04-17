@@ -1,11 +1,13 @@
 import request from 'supertest';
 import { expect } from 'chai';
 import mongoose from 'mongoose';
-import app from './app.js';  // Adjust the path as necessary
+import app from './app.js';  
 
 
-//use npm test to test
 
+
+//JUST REMINDING THAT IT IS NOT EASY TO TEST ROUTES USING UNIT TESTS A Bunch of the software you could use has been deprecated 
+//using postman to test the routes was easier for me
 
 describe('Lab Routes', function() {
     before(function(done) {
@@ -59,5 +61,4 @@ describe('Lab Routes', function() {
         });
     });
 
-    // More tests for other routes...
 });
