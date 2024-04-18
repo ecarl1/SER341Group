@@ -13,7 +13,6 @@ labRouter.get('/', async (req, res) => {
         res.json(labs);
     } catch (e) {
         console.error("Failed to retrieve labs", e);
-        res.status(500).json({ message: "Failed to retrieve labs" });
     }
 });
 
@@ -28,7 +27,6 @@ labRouter.post('/', async (req, res) => {
         res.status(201).json(lab);
     } catch (e) {
         console.error("Failed to create lab", e);
-        res.status(500).json({ message: "Failed to create lab" });
     }
 });
 
@@ -118,7 +116,6 @@ labRouter.get('/:labID/students/find/:studentID', async (req, res) => {
       res.json(studentInfo);
   } catch (e) {
       console.error("Error finding student", e);
-      res.status(500).json({ message: "Internal Server Error", error: e.message });
   }
 });
 
@@ -179,18 +176,18 @@ labRouter.route('/:labID/absences/:studentID')
 //GET labs taught by instructor by instructor id
 labRouter.get('/instructor/:instructorID', async (req, res) => {
   try {
+    //getting the id from the url request
+    const instructorID = req.params.instructorID;
 
-    //
-      const instructor = await Instructor.findById(req.params.instructorID);
-      if (!instructor) {
-          return res.status(404).json({ message: "Instructor not found" });
-      }
+    //find the instructor from their ID from the list of labs
+    //not I know this needs to have a better implementation which involves referencing the labs to the instructor 
+    const labs = await Lab.find({ instructor: instructorID });
 
-      await instructor.populate('labs');
-      res.json(instructor.labs);
+
+    //respones
+    res.json(labs);
   } catch (e) {
-      console.error("Error getting instructor labs:", e);
-      res.status(500).json({ message: "Failed to retrieve labs for the instructor", error: e.message });
+    console.error("Error find labs taught:", e);
   }
 });
 

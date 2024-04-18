@@ -46,7 +46,6 @@ studentRouter.route('/:studentID')
         res.json(student);
     } catch (e) {
         console.error("Error getting student", e);
-        res.status(500).json({ error: 'Server error', message: e.message });
     }
 });
 
@@ -84,10 +83,9 @@ studentRouter.post('/:studentID/enroll/:labID', async (req, res) => {
 
       //success
       res.json({ message: "Student enrolled", lab });
-  } catch (error) {
+  } catch (e) {
     //if unable to enroll student
-      console.error("Error enrolling student:", error);
-      res.status(500).json({ message: "Error enrolling student", error: error.toString() });
+      console.error("Error enrolling student:", e);
   }
 });
 

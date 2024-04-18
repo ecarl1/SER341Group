@@ -51,8 +51,9 @@ describe('Unit tests', () => {
         expect(savedStudent.studentID).toBe(studentData.studentID);
         expect(savedStudent.name).toBe(studentData.name);
     
+        //these deletes delete everything in list I have no idea why so I commented them out for now
         //deleting the data after it is created 
-        await Student.deleteOne({ studentID: studentData.studentID });
+        //await Student.deleteOne({ studentID: studentData.studentID });
     });
 
 
@@ -70,8 +71,9 @@ describe('Unit tests', () => {
         expect(savedInstructor.instructorID).toBe(instructorData.instructorID);
         expect(savedInstructor.name).toBe(instructorData.name);
 
+        //these deletes delete everything in list I have no idea why so I commented them out for now
         //deleting the instance of the instructor after it is created
-        await Instructor.deleteOne({ instructorID: instructorData.instructorID});
+        //await Instructor.deleteOne({ instructorID: instructorData.instructorID});
     });
 
 
@@ -106,8 +108,9 @@ describe('Unit tests', () => {
         expect(savedLab.studentsEnrolled).toEqual(expect.any(Array));
         expect(savedLab.studentsEnrolled.length).toBe(0);
 
+        //these deletes delete everything in list I have no idea why so I commented them out for now
         //deleting the instance of the lab and instructor after it is created
-        await Instructor.deleteOne({ instructorID: instructorData.instructorID});
-        await Lab.deleteOne({ labID: labData.labIDID});
+        //await Instructor.deleteOne({ instructorID: instructorData.instructorID});
+        //await Lab.deleteOne({ labID: labData.labIDID});
     });
 });
