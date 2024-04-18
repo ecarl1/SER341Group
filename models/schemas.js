@@ -13,7 +13,7 @@ var Schema = mongoose.Schema;
 
 
 
-// Student Schema
+//student Schema
 var studentSchema = new Schema({
     studentID: { type: String, required: true, unique: true }, 
     name: { type: String, required: true },
@@ -25,7 +25,7 @@ var studentSchema = new Schema({
     timestamps: true
 });
 
-// Instructor Schema
+//instructor Schema
 var instructorSchema = new Schema({
     instructorID: { type: String, required: true, unique: true }, 
     name: { type: String, required: true },
@@ -34,7 +34,7 @@ var instructorSchema = new Schema({
     timestamps: true
 });
 
-// Lab Schema
+//lab schema
 var labSchema = new Schema({
     courseName: { type: String, required: true },
     instructor: { type: Schema.Types.ObjectId, ref: 'Instructor', required: true },
