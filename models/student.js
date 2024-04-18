@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// Student Schema
+//Student Schema
 var studentSchema = new Schema({
     //Id for each student
     studentID: { type: String, required: true, unique: true },
@@ -17,7 +17,7 @@ var studentSchema = new Schema({
     timestamps: true
 });
 
-// Adding methods for student absences
+//adding methods for student absences
 studentSchema.methods.recordAbsence = function(labId, absenceDate) {
     this.enrolledLabs = this.enrolledLabs.map(enrollment => {
         if(enrollment.lab.equals(labId)) {
