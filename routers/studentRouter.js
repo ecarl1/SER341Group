@@ -51,7 +51,7 @@ studentRouter.route('/:studentID')
 });
 
 //PUT to enroll a student in a lab
-studentRouter.put('/:studentID/enroll/:labID', async (req, res) => {
+studentRouter.post('/:studentID/enroll/:labID', async (req, res) => {
   try {
       //gets the student and labID from their schemas
       const { studentID, labID } = req.params;

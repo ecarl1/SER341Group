@@ -106,8 +106,8 @@ labRouter.get('/:labID/students/find/:studentID', async (req, res) => {
       }
 
       //Find the enrolled student by their ID
-      const studentInfo = lab.studentsEnrolled.find(enrollment => 
-          enrollment.student._id.toString() === req.params.studentID
+      const studentInfo = lab.studentsEnrolled.find(
+        enrollment => enrollment.student._id.toString() === req.params.studentID
       );
 
       //if there is not a student found
@@ -128,7 +128,9 @@ labRouter.get('/:labID/students/find/:studentID', async (req, res) => {
 labRouter.route('/:labID/absences')
 .get(async (req, res, next) => {
     try {
+      //find the lab by ID 
       const lab = await Lab.findById(req.params.labID);
+      //turns the absences connected to the object to json
       res.json(lab.absences);
     } catch (e) {
       console.log("Error finding students", e);
@@ -163,8 +165,9 @@ labRouter.route('/:labID/absences/:studentID')
         //only populates absences related to the student ID
         match: { student: req.params.studentID } })
       //filters the absences array to find where the student is located
-      const studentAbsences = lab.absences.filter(absence => absence.student && 
-      absence.student._id.equals(req.params.studentID));
+      const studentAbsences = lab.absences.filter(
+        absence => absence.student && absence.student._id.equals(req.params.studentID)
+      );
       //returns with the response
       res.json(studentAbsences);
     } catch (e) {
@@ -176,6 +179,8 @@ labRouter.route('/:labID/absences/:studentID')
 //GET labs taught by instructor by instructor id
 labRouter.get('/instructor/:instructorID', async (req, res) => {
   try {
+
+    //
       const instructor = await Instructor.findById(req.params.instructorID);
       if (!instructor) {
           return res.status(404).json({ message: "Instructor not found" });

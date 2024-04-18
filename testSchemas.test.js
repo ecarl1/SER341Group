@@ -30,20 +30,19 @@ afterAll(async () => {
 });
 
 //the describe for the unit tests
-describe('MongoDB Schema Tests', () => {
+describe('Unit tests', () => {
     const createDocument = async (model, data) => {
         const doc = new model(data);
         return doc.save();
     };
 
     //unit test for creating a student using the student schema 
-    test('Create a new student', async () => {
-        const uniqueSuffix = Date.now().toString();
-
+    test('Create student', async () => {
+        
         //creating the temp data for a student
         const studentData = {
-            studentID: `student-test-${uniqueSuffix}`, 
-            name: 'Test Student'
+            studentID: `id`, 
+            name: 'Eric'
         };
         const savedStudent = await createDocument(Student, studentData);
     
@@ -52,16 +51,17 @@ describe('MongoDB Schema Tests', () => {
         expect(savedStudent.studentID).toBe(studentData.studentID);
         expect(savedStudent.name).toBe(studentData.name);
     
+        //deleting the data after it is created 
         await Student.deleteOne({ studentID: studentData.studentID });
     });
 
 
     //testing the instructor schema
-    test('Create a new instructor', async () => {
+    test('Create instructor', async () => {
         //temp data for the instructor
         const instructorData = {
-            instructorID: 'instructor-test-011', 
-            name: 'Instructor Jane'
+            instructorID: 'id', 
+            name: 'Prof. Ruby'
         };
         const savedInstructor = await createDocument(Instructor, instructorData);
 
@@ -69,25 +69,28 @@ describe('MongoDB Schema Tests', () => {
         expect(savedInstructor._id).toBeDefined();
         expect(savedInstructor.instructorID).toBe(instructorData.instructorID);
         expect(savedInstructor.name).toBe(instructorData.name);
+
+        //deleting the instance of the instructor after it is created
+        await Instructor.deleteOne({ instructorID: instructorData.instructorID});
     });
 
 
     //test for creating a new lab using the lab schema
     test('Create a new lab', async () => {
         const instructorData = {
-            instructorID: 'instructor-test-002', 
-            name: 'Instructor John'
+            instructorID: 'id', 
+            name: 'Prof. Blake'
         };
         const savedInstructor = await createDocument(Instructor, instructorData);
 
         //creating the test data for the la
         const labData = {
-            labID: '21321312',
-            courseName: 'Biology 101',
+            labID: '1',
+            courseName: 'CSC 11',
             instructor: savedInstructor._id,
             dateAndTime: new Date(),
-            labType: 'Practical',
-            location: 'Biology Lab',
+            labType: 'Experimental',
+            location: 'CCE',
             capacity: 20,
             studentsEnrolled: []
         };
@@ -102,5 +105,9 @@ describe('MongoDB Schema Tests', () => {
         expect(savedLab.capacity).toBe(labData.capacity);
         expect(savedLab.studentsEnrolled).toEqual(expect.any(Array));
         expect(savedLab.studentsEnrolled.length).toBe(0);
+
+        //deleting the instance of the lab and instructor after it is created
+        await Instructor.deleteOne({ instructorID: instructorData.instructorID});
+        await Lab.deleteOne({ labID: labData.labIDID});
     });
 });
