@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routers
+//routers
 var labRouter = require('./routers/labRouter.js');
 app.use('/labs', labRouter);
 
@@ -30,13 +30,14 @@ var studentRouter = require('./routers/studentRouter.js');
 app.use('/students', studentRouter);
 
 
+//some error handlers
 
-// Catch 404 and forward to error handler
+//Catch 404 and forward to error handler
 app.use(function(req, res, next) {
   res.status(404).json({ message: "Not Found" });
 });
 
-// Error handler for functions with 500 error
+//Error handler for functions with 500 error
 app.use(function(err, req, res, next) {
   res.status(err.status || 500).json({
     message: err.message,

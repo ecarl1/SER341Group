@@ -12,7 +12,7 @@ labRouter.get('/', async (req, res) => {
         const labs = await Lab.find({});
         res.json(labs);
     } catch (e) {
-        console.error("Failed to retrieve labs", e);
+        console.error("Failed get labs", e);
     }
 });
 
@@ -42,7 +42,7 @@ labRouter.route('/:labID')
       //returning json with lab data
       res.json(lab);
     } catch (e) {
-      console.log("Error retriving lab", e);
+      console.log("Error getting lab", e);
     }
 })
 
@@ -145,7 +145,7 @@ labRouter.route('/:labID/absences')
         lab.save();
         res.json(lab.absences);
     } catch (e) {
-      console.log("Error updating absences", e);
+      console.log("Error putting absences", e);
     }
 });
 
@@ -172,7 +172,7 @@ labRouter.route('/:labID/absences/:studentID')
       }
 });
 
-//not working
+//working
 //GET labs taught by instructor by instructor id
 labRouter.get('/instructor/:instructorID', async (req, res) => {
   try {
