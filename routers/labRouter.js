@@ -100,7 +100,7 @@ labRouter.get('/:labID/students/find/:studentID', async (req, res) => {
       const lab = await Lab.findById(req.params.labID).populate('studentsEnrolled.student');
       //error return if the lab cannot be found
       if (!lab) {
-          return res.status(404).json({ message: 'Lab not found' });
+          return res.status(404).json({ message: 'Lab DNE' });
       }
 
       //Find the enrolled student by their ID
@@ -110,7 +110,7 @@ labRouter.get('/:labID/students/find/:studentID', async (req, res) => {
 
       //if there is not a student found
       if (!studentInfo) {
-          return res.status(404).json({ message: 'Student not found in this lab' });
+          return res.status(404).json({ message: 'Student not in the lab' });
       }
 
       res.json(studentInfo);

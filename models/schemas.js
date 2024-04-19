@@ -54,7 +54,7 @@ var labSchema = new Schema({
     timestamps: true
 });
 
-// Adding methods for student absences
+//Adding methods for student absences
 studentSchema.methods.recordAbsence = function(labId, absenceDate) {
     this.enrolledLabs = this.enrolledLabs.map(enrollment => {
         if(enrollment.lab.equals(labId)) {
@@ -64,7 +64,7 @@ studentSchema.methods.recordAbsence = function(labId, absenceDate) {
     });
 };
 
-// Adding method to Lab for enrollment
+//Adding method to Lab for enrollment
 labSchema.methods.enrollStudent = function(studentId) {
     this.studentsEnrolled.push({ student: studentId });
 };
