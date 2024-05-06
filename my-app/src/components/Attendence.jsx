@@ -7,18 +7,14 @@ const Attendence = () =>  {
             'Present', 'Absent'
         ]
         return ( <form>
-            <div id="header">
-    <a href="start.html">Attendance Recording</a>
-    <a href="createLab.html">Create Lab</a>
-</div>
 
-<div id="attendance-form">
+<div className="attendance-form">
     <h2>Attendance Recording</h2>
     <form id="record-form">
-        <label for="studentName">Student Name:</label>
+        <label htmlFor="studentName">Student Name:</label>
         <input type="text" id="studentName" required></input>
 
-        <label for="attendanceStatus">Attendance Status:</label>
+        <label htmlFor="attendanceStatus">Attendance Status:</label>
         <select id="attendanceStatus" required>
             <option value="present">Present</option>
             <option value="absent">Absent</option>
@@ -28,9 +24,6 @@ const Attendence = () =>  {
     </form>
 </div>
 
-<div id="footer">
-    <button onclick="logout()">Logout</button>
-</div>
         </form> );
     }
 
