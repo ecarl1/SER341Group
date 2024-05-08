@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
+import { saveLab } from '../services/LabService';
+import{ getInstructor } from '../services/InstructorService';
 import DatePicker from 'react-date-picker';
 const CreateLab  = () => {
     
@@ -24,7 +26,7 @@ const CreateLab  = () => {
       };
     
         return ( 
-       <form>
+       <form onSubmit={useForm().handleSubmit}>
         
         <div className="lab-form">
     <h2>Create Lab</h2>
