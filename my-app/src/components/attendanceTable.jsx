@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import student from "../../../backend/models/student";
+// import student from "../../../backend/models/student";
 
 class AttendanceTable extends Component {
     constructor(props) {

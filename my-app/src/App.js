@@ -10,6 +10,7 @@ import CreateLab from './components/CreateLab';
 import MakeUpLab from './components/MakeUpLab';
 import { useState, React, useEffect } from "react";
 import auth from "./services/authService";
+import LabDislplay from './components/LabDisplay';
 
 function App() {
   const [user, setUser] = useState("");
@@ -27,6 +28,7 @@ function App() {
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/labs" element={<CreateLab />} />
         <Route path="/makeuplab" element={<MakeUpLab />} />
+        <Route path="/labview" element={<LabDislplay />} />
       </Routes>
       </BrowserRouter>
     </div>
