@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {getLabs, getLab, saveLab} from "../services/labsService";
-import Lab from './Lab';
+// import Lab from './Lab';
 
 const LabDislplay = () => {
     const [labs, setLabs] = useState([]);
@@ -37,7 +37,7 @@ const LabDislplay = () => {
             <h6 className="card-subtitle mb-2 text-muted">{lab.location}</h6>
             <h6 className="card-subtitle mb-2 text-muted">{lab.dateAndTime}</h6>
             <h6 className="card-subtitle mb-2 text-muted">{lab.labType}</h6>
-            <h6 className="card-subtitle mb-2 text-muted">{lab.capacity}</h6>
+            <h6 className="card-subtitle mb-2 text-muted">Capacity: {lab.capacity}</h6>
             <button
                 className="btn"
                 onClick={() => handleRegister(lab.id)}

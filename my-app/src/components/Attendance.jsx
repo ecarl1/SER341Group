@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Dropdown from 'react-dropdown';
 import { useForm } from "react-hook-form";
 import { getStudent, getStudents, saveStudent } from '../services/StudentService';
-import AttendanceTable from './attendancetable';
+import AttendanceTable from './attendanceTable';
 const Attendance = () =>  {
      
     const [students, setStudents] = useState([]);
