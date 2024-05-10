@@ -15,6 +15,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 var app = express();
 
+var cors = require('cors');
+app.use(cors())
+
 //Middleware
 app.use(logger('dev'));
 app.use(bodyParser.json());

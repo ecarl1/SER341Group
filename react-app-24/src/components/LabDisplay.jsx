@@ -14,10 +14,13 @@ const LabDislplay = () => {
       fetchData();
     });
 
-    const handleRegister = (id) => {
+    const handleRegister = (id, labName) => {
       // Find the desired lab
       const updatedLab = getLab(id)
-      //I don't know why but it doesn't seem to like accessing enrolled students so I just have it lower capacity by 1
+      //I don't know why but it doesn't seem to like accessing enrolled students,
+      //as well as the fact that login isn't fully implemented
+      //so I just have it send an alert and lower capacity by 1 because I can't really access user
+      alert("Registered for " + labName)
       updatedLab.capacity = updatedLab.capacity-1
       // Update the lab 
       saveLab(updatedLab)
@@ -40,7 +43,7 @@ const LabDislplay = () => {
             <h6 className="card-subtitle mb-2 text-muted">Capacity: {lab.capacity}</h6>
             <button
                 className="btn"
-                onClick={() => handleRegister(lab.id)}
+                onClick={() => handleRegister(lab.id, lab.courseName)}
               >
                 Join
               </button>

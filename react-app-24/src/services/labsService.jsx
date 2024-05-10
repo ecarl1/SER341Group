@@ -13,17 +13,17 @@ function labUrl(id) {
 
 export function getLabs() {
   //console.log(getJwt());
-  // http.setJwt(getJwt());
+  http.setJwt(getJwt());
   return http.get(apiEndpoint);
 }
 
 export function getLab(labId) {
-  // http.setJwt(getJwt());
+  http.setJwt(getJwt());
   return http.get(labUrl(labId));
 }
 
 export function saveLab(lab) {
-  // http.setJwt(getJwt());
+  http.setJwt(getJwt());
   if (lab._id) {
     const body = { ...lab };
     delete body._id;
@@ -34,6 +34,6 @@ export function saveLab(lab) {
 }
 
 export function deleteLab(labId) {
-  // http.setJwt(getJwt());
+  http.setJwt(getJwt());
   return http.delete(labUrl(labId));
 }
