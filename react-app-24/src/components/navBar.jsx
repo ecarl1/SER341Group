@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 class NavBar extends Component {
   render() {
+    const { user } = this.props;
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <Link className="navbar-brand" to="/">
@@ -23,11 +24,17 @@ class NavBar extends Component {
             <NavLink className="nav-item nav-link" to="/login">
               Login
             </NavLink>
-            <NavLink className="nav-item nav-link" to="/products">
-              Products
+            <NavLink className="nav-item nav-link" to="/attandence">
+              Attendance
             </NavLink>
-            <NavLink className="nav-item nav-link" to="/about">
-              About
+            <NavLink className="nav-item nav-link" to="/labs">
+              Labs
+            </NavLink>
+            <NavLink className="nav-item nav-link" to="/makeuplab">
+              Make-Up Lab
+            </NavLink>
+            <NavLink className="nav-item nav-link" to="/labview">
+              View Labs
             </NavLink>
           </div>
         </div>

@@ -33,6 +33,9 @@ class NavBar extends Component {
             <NavLink className="nav-item nav-link" to="/makeuplab">
               Make-Up Lab
             </NavLink>
+            <NavLink className="nav-item nav-link" to="/labview">
+              View Labs
+            </NavLink>
           </div>
         </div>
       </nav>

@@ -1,27 +1,30 @@
-import React from "react";
-import Table from "./table";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import NavBar from "./components/navBar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Products from "./components/products";
-import About from "./components/about";
-import NotFound from "./components/notFound";
-import ProductDetails from "./components/productDetails";
 import LoginForm from "./components/LoginForm";
+import Attendance from "./components/Attendance";
+import CreateLab from "./components/CreateLab";
+import MakeUpLab from "./components/MakeUpLab";
+import LabDislplay from "./components/LabDisplay";
 
 function App() {
+  /* const [user, setUser] = useState("");
+  useEffect(() => {
+    const user = auth.getCurrentUser();
+    console.log(user);
+    setUser(user);
+  }, []);*/
   return (
-    <div className="container">
+    <div className="App">
       <BrowserRouter>
         <NavBar />
         <Routes>
-          <Route path="/ " element={<Table />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/login" element={<LoginForm />}></Route>
-          <Route path="/products" element={<Products sortBy="name" />}></Route>
-          <Route path="/products/:id" element={<ProductDetails />}></Route>
-
-          <Route path="*" element={<NotFound />}></Route>
-          <Route index element={<Table />}></Route>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/attendance" element={<Attendance />} />
+          <Route path="/labs" element={<CreateLab />} />
+          <Route path="/makeuplab" element={<MakeUpLab />} />
+          <Route path="/labview" element={<LabDislplay />} />
         </Routes>
       </BrowserRouter>
     </div>
