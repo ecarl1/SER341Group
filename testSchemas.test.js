@@ -4,12 +4,14 @@ const Student = require('./models/student');
 const Instructor = require('./models/instructor');
 const Lab = require('./models/lab');
 
+
 const connectDB = async (connectionUrl) => {
     try {
         await mongoose.connect(connectionUrl, {
             useNewUrlParser: true, 
             useUnifiedTopology: true
         });
+        console.log(connectionUrl);
         console.log('Database connected successfully');
     } catch (error) {
         console.error('Database connection failed:', error);
