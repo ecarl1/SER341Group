@@ -3,6 +3,35 @@ var studentRouter = express.Router();
 var Student = require('../models/student.js');
 var Lab = require('../models/lab'); 
 var Instructor = require('../models/instructor.js'); 
+var passport = require('passport');
+var jwt = require('jsonwebtoken');
+var bcrypt = require('bcryptjs');
+var Verify = require('./verify');
+
+
+
+
+//Login student
+//json body will have username and password
+studentRouter.post('/login', async (req, res) => {
+  try {
+      const student = await Student.findOne({ studentID: req.body.studentID });
+      if (!student) {
+          return res.status(401).json({ message: 'Student not found' });
+      }
+
+      const isMatch = await bcrypt.compare(req.body.password, student.password);
+      if (!isMatch) {
+          return res.status(401).json({ message: 'Invalid password' });
+      }
+
+      const token = Verify.getToken({ _id: student._id });
+      res.status(200).json({ message: 'Login successful', token: token });
+  } catch (e) {
+      console.error("Error logging in", e);
+      res.status(500).json({ message: "Error logging in", error: e.message });
+  }
+});
 
 //GET students
 studentRouter.route('/')
@@ -17,18 +46,24 @@ studentRouter.route('/')
     }
 })
 
+
+
 //POST student
-.post(async (req, res) => {
-  try {
-    //creates a new student doucmentation in the database
-    const student = await Student.create(req.body);
-    console.log("Data saved", student);
-    //success response
-    res.status(201).json({ message: "Added student id:", id: student._id });
-  } catch (e) {
-    console.error("Failed save data", e);
-    res.status(500).json({ message: "Failed save data", error: e.message });
-  }
+studentRouter.post('/', async (req, res) => {
+    try {
+        if (!req.body.password) {
+            return res.status(400).json({ message: "Password is required" });
+        }
+
+        // Hash the password before saving the student
+        req.body.password = await bcrypt.hash(req.body.password, 10);
+        const student = await Student.create(req.body);
+        console.log("Data saved", student);
+        res.status(201).json({ message: "Added student id:", id: student._id });
+    } catch (e) {
+        console.error("Failed save data", e);
+        res.status(500).json({ message: "Failed save data", error: e.message });
+    }
 });
 
 

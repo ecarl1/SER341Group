@@ -7,6 +7,8 @@ var studentSchema = new Schema({
     studentID: { type: String, required: true, unique: true },
     //name is not unqiue for each student but still can be used to find the student 
     name: { type: String, required: true },
+    //added password for student
+    password: { type: String, required: true },
 
     //list of the labs the student enrolled in
     enrolledLabs: [{
